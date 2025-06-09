@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROF. DR.MD.SHAMSUL HUDA</title>
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="dashboard.css" rel="stylesheet">
+    <style>
+        :root {
+            --system-blue: #0A84FF;
+            --system-green: #34C759;
+            --system-red: #FF3B30;
+            --system-gray: #8E8E93;
+            --background-primary: #FFFFFF;
+            --background-secondary: #F2F2F7;
+            --text-primary: #1C1C1E;
+            --text-secondary: #636366;
+        }
+        
+        .dark-mode {
+            --background-primary: #1C1C1E;
+            --background-secondary: #2C2C2E;
+            --text-primary: #FFFFFF;
+            --text-secondary: #AEAEB2;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-secondary);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .icon-button {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+        
+        .icon-button:hover {
+            background-color: rgba(120, 120, 128, 0.12);
+        }
+        
+        .date-display {
+            font-size: 17px;
+            color: var(--text-secondary);
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+        }
+        
+        .card {
+            background-color: var(--background-primary);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+        
+        .today-overview {
+            grid-column: span 8;
+        }
+        
+        .patient-insights {
+            grid-column: span 4;
+        }
+        
+        .ai-recommendations {
+            grid-column: span 6;
+        }
+        
+        .clinic-performance {
+            grid-column: span 6;
+        }
+        
+        .appointment-chart {
+            height: 200px;
+            margin-bottom: 20px;
+        }
+        
+        .appointment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .appointment-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background-color: var(--background-secondary);
+            border-radius: 8px;
+        }
+        
+        .appointment-time {
+            font-weight: 500;
+            color: var(--system-blue);
+        }
+        
+        .appointment-patient {
+            font-weight: 500;
+        }
+        
+        .appointment-status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .status-confirmed {
+            background-color: rgba(52, 199, 89, 0.1);
+            color: var(--system-green);
+        }
+        
+        .status-canceled {
+            background-color: rgba(255, 59, 48, 0.1);
+            color: var(--system-red);
+        }
+        
+        .insight-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        
+        .metric-card {
+            background-color: var(--background-secondary);
+            border-radius: 8px;
+            padding: 16px;
+        }
+        
+        h3 {
+            font-size: 17px;
+            font-weight: 500;
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+        
+        .chart-container {
+            height: 120px;
+        }
+        
+        .recommendation-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .recommendation-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background-color: var(--background-secondary);
+            border-radius: 8px;
+        }
+        
+        .priority-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-top: 6px;
+        }
+        
+        .priority-high {
+            background-color: var(--system-red);
+        }
+        
+        .priority-medium {
+            background-color: var(--system-blue);
+        }
+        
+        .recommendation-content {
+            flex: 1;
+        }
+        
+        .recommendation-patient {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .recommendation-text {
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+        
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        
+        .metric {
+            background-color: var(--background-secondary);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+        
+        .value {
+            font-size: 28px;
+            font-weight: 600;
+            margin: 8px 0;
+        }
+        
+        #total-appointments {
+            color: var(--system-blue);
+        }
+        
+        #total-followups {
+            color: var(--system-green);
+        }
+        
+        #satisfaction-rate {
+            color: #FFD60A;
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <div class="container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <h1>PROF. DR.MD.SHAMSUL HUDA</h1>
+            <div class="header-controls">
+                <button id="theme-toggle" class="icon-button">
+                    <i class="mdi mdi-theme-light-dark"></i>
+                </button>
+                <div class="date-display" id="current-date"></div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="grid-container">
+            <!-- Today's Overview -->
+            <section class="card today-overview">
+                <h2>Today's Schedule</h2>
+                <div class="appointment-chart">
+                    <canvas id="appointmentHeatmap"></canvas>
+                </div>
+                <div class="appointment-list" id="today-appointments">
+                    <!-- Sample appointment items -->
+                    <div class="appointment-item">
+                        <div class="appointment-time">09:00 AM</div>
+                        <div class="appointment-patient">Riaz Mahmud</div>
+                        <div class="appointment-status status-confirmed">Confirmed</div>
+                    </div>
+                    <div class="appointment-item">
+                        <div class="appointment-time">10:30 AM</div>
+                        <div class="appointment-patient">Nabila Akter</div>
+                        <div class="appointment-status status-confirmed">Confirmed</div>
+                    </div>
+                    <div class="appointment-item">
+                        <div class="appointment-time">02:15 PM</div>
+                        <div class="appointment-patient">Shahin Ahmed</div>
+                        <div class="appointment-status status-canceled">Canceled</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Patient Insights -->
+            <section class="card patient-insights">
+                <h2>Patient Insights</h2>
+                <div class="insight-grid">
+                    <div class="metric-card">
+                        <h3>Follow-up Rate</h3>
+                        <div class="chart-container">
+                            <canvas id="followupChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Case Priority</h3>
+                        <div class="chart-container">
+                            <canvas id="priorityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Recommendations -->
+            <section class="card ai-recommendations">
+                <h2>AI Insights</h2>
+                <div class="recommendation-list" id="ai-recommendations">
+                    <!-- Sample recommendation items -->
+                    <div class="recommendation-item">
+                        <div class="priority-indicator priority-high"></div>
+                        <div class="recommendation-content">
+                            <div class="recommendation-patient">Nafisa Rahman</div>
+                            <div class="recommendation-text">High blood pressure readings in last 3 visits. Recommend follow-up within 1 week.</div>
+                        </div>
+                    </div>
+                    <div class="recommendation-item">
+                        <div class="priority-indicator priority-medium"></div>
+                        <div class="recommendation-content">
+                            <div class="recommendation-patient">Tamanna Begum</div>
+                            <div class="recommendation-text">Missed last 2 follow-ups for diabetes management. Consider outreach.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Clinic Performance -->
+            <section class="card clinic-performance">
+                <h2>Clinic Metrics</h2>
+                <div class="metric-grid">
+                    <div class="metric">
+                        <h3>Appointments</h3>
+                        <div class="value" id="total-appointments">24</div>
+                        <div>Today</div>
+                    </div>
+                    <div class="metric">
+                        <h3>Follow-ups</h3>
+                        <div class="value" id="total-followups">18</div>
+                        <div>Scheduled</div>
+                    </div>
+                    <div class="metric">
+                        <h3>Patient Satisfaction</h3>
+                        <div class="value" id="satisfaction-rate">94%</div>
+                        <div>This month</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Theme toggle functionality
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+        });
+
+        // Set current date
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', options);
+
+        // Initialize charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Appointment Heatmap
+            const heatmapCtx = document.getElementById('appointmentHeatmap').getContext('2d');
+            new Chart(heatmapCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['8AM', '9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM'],
+                    datasets: [{
+                        label: 'Appointments',
+                        data: [2, 5, 3, 4, 1, 2, 4, 3, 2, 1],
+                        backgroundColor: '#0A84FF',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                stepSize: 1
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Follow-up Rate Chart
+            const followupCtx = document.getElementById('followupChart').getContext('2d');
+            new Chart(followupCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Completed', 'Missed', 'Pending'],
+                    datasets: [{
+                        data: [65, 15, 20],
+                        backgroundColor: ['#34C759', '#FF3B30', '#8E8E93'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Priority Chart
+            const priorityCtx = document.getElementById('priorityChart').getContext('2d');
+            new Chart(priorityCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['High', 'Medium', 'Low'],
+                    datasets: [{
+                        data: [12, 24, 64],
+                        backgroundColor: ['#FF3B30', '#0A84FF', '#34C759'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
